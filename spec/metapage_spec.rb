@@ -51,7 +51,7 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
 
       expect :title, 'Hamburg on Ruby - Heimathafen der Hamburger Ruby Community'
       expect :description, "Hamburg on Ruby - Heimathafen der Hamburger Ruby Community - Ruby / Rails Usergroup Hamburg"
-      expect :image_url, 'http://hamburg.onruby.de/assets/labels/hamburg-28f078cdbae2624f9b8823a361b4a203.ico'
+      expect :image_url, 'http://hamburg.onruby.de/assets/labels/hamburg-b325f23b118cc5761a68b6779d7990f2.ico'
       expect :type, 'website'
       # Canonical url is canonical link rel url
       expect :canonical_url, 'http://hamburg.onruby.de/'

@@ -1,5 +1,7 @@
 # Metapage
 
+[![Build Status](https://travis-ci.org/colszowka/metapage.svg)](https://travis-ci.org/colszowka/metapage)
+
 A tiny class for extracting title, description and some further information from given urls using [open graph](http://www.ogp.me) and regular meta tags.
 
 **Why?** For example this can be used for enriching urls submitted in a chat application.

@@ -5,6 +5,7 @@ require 'uri'
 require 'resolv'
 require 'ipaddr'
 require 'digest/sha1'
+require 'mimemagic'
 
 module Metapage
   class ResolveError < StandardError; end;
@@ -40,24 +41,40 @@ module Metapage
     end
 
     def title
-      @title ||= metatag_content('og:title') || html_content('title')
+      unless image?
+        @title ||= metatag_content('og:title') || html_content('title')
+      end
     end
 
     def description
-      @description ||= metatag_content('og:description') || metatag_content('description')
+      unless image?
+        @description ||= metatag_content('og:description') || metatag_content('description')
+      end
     end
 
     def image_url
-      # Fallback to apple-touch-icon, fluid-icon, ms-tileicon etc
-      @image_url ||= metatag_content('og:image:secure_url') || metatag_content('og:image') || link_rel('apple-touch-icon-precomposed')
+      if image?
+        url
+      else
+        # Fallback to apple-touch-icon, fluid-icon, ms-tileicon etc
+        @image_url ||= metatag_content('og:image:secure_url') || metatag_content('og:image') || link_rel('apple-touch-icon-precomposed')
+      end
     end
 
     def type
-      @type ||= metatag_content('og:type') || 'website'
+      if image?
+        'image'
+      else
+        @type ||= metatag_content('og:type') || 'website'
+      end
     end
 
     def canonical_url
-      @canonical_url ||= metatag_content('og:url') || link_rel('canonical') || url
+      if image?
+        url
+      else
+        @canonical_url ||= metatag_content('og:url') || link_rel('canonical') || url
+      end
     end
 
     def id
@@ -67,7 +84,17 @@ module Metapage
     end
 
     def site_name
-      @site_name ||= metatag_content('og:site_name') || host
+      unless image?
+        @site_name ||= metatag_content('og:site_name') || host
+      end
+    end
+
+    def media_type
+      mimemagic and mimemagic.mediatype
+    end
+
+    def content_type
+      mimemagic and mimemagic.type
     end
 
     def to_h
@@ -78,14 +105,15 @@ module Metapage
         image_url: image_url,
         type: type,
         canonical_url: canonical_url,
-        site_name: site_name
+        site_name: site_name,
+        media_type: media_type,
+        content_type: content_type
       }
     end
 
     def to_json
       to_h.to_json
     end
-
 
     private
 
@@ -137,8 +165,16 @@ module Metapage
         end
       end
 
+      def image?
+        media_type == 'image'
+      end
+
+      def mimemagic
+        @mimemagic ||= MimeMagic.by_magic(content)
+      end
+
       def content
-        http_response.body        
+        http_response.body
       end
 
       def http_response

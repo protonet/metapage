@@ -32,6 +32,8 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
       expect :canonical_url, 'https://github.com/colszowka/simplecov'
       expect :site_name, 'GitHub'
       expect :id, Digest::SHA1.hexdigest('https://github.com/colszowka/simplecov')
+      expect :media_type, 'text'
+      expect :content_type, 'text/html'
     end
 
     describe "Twitter Tweet with mistakenly included URL params" do
@@ -44,6 +46,8 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
       expect :canonical_url, 'https://twitter.com/AndrewBloch/status/288393587425701888'
       expect :site_name, 'Twitter'
       expect :id, Digest::SHA1.hexdigest('https://twitter.com/AndrewBloch/status/288393587425701888')
+      expect :media_type, 'text'
+      expect :content_type, 'text/html'
     end
 
     describe "Website without og tags" do
@@ -57,6 +61,18 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
       expect :canonical_url, 'http://hamburg.onruby.de/'
       # Site name is the domain
       expect :site_name, 'hamburg.onruby.de'
+      expect :media_type, 'text'
+      expect :content_type, 'text/html'
+    end
+
+    describe "Image URL" do
+      let(:url) { "https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg" }
+      expect :title, nil
+      expect :description, nil
+      expect :type, 'image'
+      expect :canonical_url, 'https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg'
+      expect :content_type, 'image/jpeg'
+      expect :site_name, nil
     end
 
     describe "Passing nil" do

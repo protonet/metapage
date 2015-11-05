@@ -12,7 +12,15 @@ end
 desc "Generates examples for the readme on the fly"
 task examples: :env do
   require 'pp'
-  cmd = "pp Metapage.fetch('https://github.com/colszowka/simplecov').to_h"
-  puts cmd
-  eval cmd
+
+  [
+    'https://github.com/colszowka/metapage',
+    'https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg'
+  ].each do |url|
+
+    cmd = "pp Metapage.fetch(#{url.inspect}).to_h"
+    puts cmd
+    eval cmd
+
+  end
 end

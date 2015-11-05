@@ -20,15 +20,35 @@ Add `gem 'metapage'` to your `Gemfile` or `gem install metapage` on your command
 
 ## Usage
 
-Fetch a specific URL. Returns `nil` if the content is not html or loading fails due to invalid url, http response or timeout.
+Fetch a specific URL. Returns `nil` if the content is not html or an image or loading fails due to invalid url, http response or timeout.
 
-    Metapage.fetch('https://github.com/colszowka/simplecov').to_h
-    {:title=>"colszowka/simplecov",
-     :description=>"simplecov - Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites",
+    pp Metapage.fetch("https://github.com/colszowka/metapage").to_h
+    {:id=>"9fa08a8cef7450e558723a53c8a122a096599709",
+     :title=>"colszowka/metapage",
+     :description=>
+      "metapage - A tiny class for extracting title, description and some further information from given urls",
      :image_url=>"https://avatars0.githubusercontent.com/u/13972?v=3&s=400",
      :type=>"object",
-     :canonical_url=>"https://github.com/colszowka/simplecov",
-     :site_name=>"GitHub"}
+     :canonical_url=>"https://github.com/colszowka/metapage",
+     :site_name=>"GitHub",
+     :media_type=>"text",
+     :content_type=>"text/html"}
+
+For images, the resulting content is much more minimal:
+
+    pp Metapage.fetch("https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg").to_h
+    {:id=>"7bd710044d61b55c63d1d0089632a6417f370f53",
+     :title=>nil,
+     :description=>nil,
+     :image_url=>
+      "https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg",
+     :type=>"image",
+     :canonical_url=>
+      "https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg",
+     :site_name=>nil,
+     :media_type=>"image",
+     :content_type=>"image/jpeg"}
+
 
 Extract urls from a given string and fetch the metadata for them. Only returns successfully retrieved results.
 

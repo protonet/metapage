@@ -1,6 +1,6 @@
 # Metapage
 
-[![Build Status](https://travis-ci.org/colszowka/metapage.svg)](https://travis-ci.org/colszowka/metapage)
+[![Build Status](https://travis-ci.org/protonet/metapage.svg)](https://travis-ci.org/protonet/metapage)
 
 A tiny class for extracting title, description and some further information from given urls using [open graph](http://www.ogp.me) and regular meta tags.
 
@@ -22,14 +22,15 @@ Add `gem 'metapage'` to your `Gemfile` or `gem install metapage` on your command
 
 Fetch a specific URL. Returns `nil` if the content is not html or an image or loading fails due to invalid url, http response or timeout.
 
-    pp Metapage.fetch("https://github.com/colszowka/metapage").to_h
-    {:id=>"9fa08a8cef7450e558723a53c8a122a096599709",
-     :title=>"colszowka/metapage",
+    pp Metapage.fetch("https://github.com/protonet/metapage").to_h
+    
+    {:id=>"58329eab7cf73bb0b29123a63ae150cc59dcf2e3",
+     :title=>"protonet/metapage",
      :description=>
       "metapage - A tiny class for extracting title, description and some further information from given urls",
-     :image_url=>"https://avatars0.githubusercontent.com/u/13972?v=3&s=400",
+     :image_url=>"https://avatars1.githubusercontent.com/u/375656?v=3&s=400",
      :type=>"object",
-     :canonical_url=>"https://github.com/colszowka/metapage",
+     :canonical_url=>"https://github.com/protonet/metapage",
      :site_name=>"GitHub",
      :media_type=>"text",
      :content_type=>"text/html"}
@@ -37,6 +38,7 @@ Fetch a specific URL. Returns `nil` if the content is not html or an image or lo
 For images, the resulting content is much more minimal:
 
     pp Metapage.fetch("https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg").to_h
+
     {:id=>"7bd710044d61b55c63d1d0089632a6417f370f53",
      :title=>nil,
      :description=>nil,
@@ -67,7 +69,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/colszowka/metapage/fork )
+1. Fork it ( https://github.com/protonet/metapage/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

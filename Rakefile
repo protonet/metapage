@@ -14,7 +14,7 @@ task examples: :env do
   require 'pp'
 
   [
-    'https://github.com/colszowka/metapage',
+    'https://github.com/protonet/metapage',
     'https://s-media-cache-ak0.pinimg.com/736x/e3/ce/b3/e3ceb3fe3224e104ad0f019117b8e1f0.jpg'
   ].each do |url|
 

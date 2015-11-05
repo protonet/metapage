@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Extract metadata about a given HTML url from open graph and regular meta tags}
   spec.description   = spec.summary
-  spec.homepage      = "https://github.com/colszowka/metapage"
+  spec.homepage      = "https://github.com/protonet/metapage"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"

@@ -25,11 +25,18 @@ module Metapage
     end
 
     def extract(text)
-      URI.extract(text, ['http', 'https']).map {|url| fetch(url.gsub(/[\.\,]+\Z/, '')) }.compact
+      extract_urls(text).map {|url| fetch(url.gsub(/[\.\,]+\Z/, '')) }.compact
     end
 
     def extract!(text)
-      URI.extract(text, ['http', 'https']).map {|url| fetch!(url.gsub(/[\.\,]+\Z/, '')) }.compact
+      extract_urls(text).map {|url| fetch!(url.gsub(/[\.\,]+\Z/, '')) }.compact
+    end
+
+    def extract_urls(text)
+      processed_text = text.
+        gsub(/([^\/])www\./, '\1http://www.').
+        gsub(/\Awww\./, 'http://www.')
+      URI.extract processed_text, ['http', 'https']
     end
   end
 

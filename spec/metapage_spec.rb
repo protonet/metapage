@@ -145,6 +145,11 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
       expect(result.map(&:title)).to be == ['colszowka/simplecov', 'Hamburg on Ruby - Heimathafen der Hamburger Ruby Community']
     end
 
+    it "correctly handles www. urls without protocol prefix" do
+      result = Metapage.extract("www.github.com/colszowka/simplecov\nwww.xkcd.com/about/")
+      expect(result.map(&:title)).to be == ['colszowka/simplecov', 'xkcd - A webcomic']
+    end
+
     it "correctly handles newlines as separators between urls" do
       result = Metapage.extract("http://github.com/colszowka/simplecov\nhttp://hamburg.onruby.de?foo=bar")
       expect(result.map(&:title)).to be == ['colszowka/simplecov', 'Hamburg on Ruby - Heimathafen der Hamburger Ruby Community']

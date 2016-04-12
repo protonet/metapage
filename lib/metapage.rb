@@ -11,7 +11,10 @@ module Metapage
   class ResolveError < StandardError; end;
   class HTTPResponseError < StandardError; end;
   class ContentTypeError < StandardError; end;
-  ERROR_CLASSES = [ResolveError, HTTPResponseError, ContentTypeError]
+  class IgnoredTitleError < StandardError; end;
+  ERROR_CLASSES = [ResolveError, HTTPResponseError, ContentTypeError, IgnoredTitleError]
+
+  IGNORE_LIST = ["signup", "signin", "login", "anmeldung", "anmelden", "registration"]
 
   class << self
     def fetch(url)
@@ -49,7 +52,14 @@ module Metapage
 
     def title
       unless image?
-        @title ||= metatag_content('og:title') || html_content('title')
+        @title ||= (metatag_content('og:title') || html_content('title')).tap do |title|
+          if title
+            checked_title = title.downcase.gsub(' ', '')
+            if IGNORE_LIST.any? {|word| checked_title.include? word }
+              raise IgnoredTitleError
+            end
+          end
+        end
       end
     end
 

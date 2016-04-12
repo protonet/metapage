@@ -83,6 +83,14 @@ describe Metapage, vcr: { cassette_name: 'fetch' } do
       end
     end
 
+    describe "Passing url with an ignored string in title" do
+      let(:url) { 'https://www.pivotaltracker.com/n/projects/1234123' }
+
+      it "returns nil" do
+        expect(result).to be_nil
+      end      
+    end
+
     describe "Passing ftp url" do
       let(:url) { 'ftp://de.releases.ubuntu.com/releases/10.04.4/HEADER.html' }
 

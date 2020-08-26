@@ -230,7 +230,7 @@ module Metapage
       end
 
       def http_client
-        http_client ||= HTTPClient.new.tap do |http_client|
+        http_client ||= HTTPClient.new(:agent_name => "Googlebot/2.1 (+http://www.google.com/bot.html)").tap do |http_client|
           http_client.receive_timeout = 3
           http_client.connect_timeout = 3
           http_client.send_timeout = 3

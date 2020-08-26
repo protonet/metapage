@@ -74,7 +74,7 @@ module Metapage
         url
       else
         # Fallback to apple-touch-icon, fluid-icon, ms-tileicon etc
-        @image_url ||= metatag_content('og:image:secure_url') || metatag_content('og:image') || link_rel('apple-touch-icon-precomposed')
+        @image_url ||= metatag_content('og:image:secure_url') || metatag_content('og:image') || link_rel('apple-touch-icon')
       end
     end
 
